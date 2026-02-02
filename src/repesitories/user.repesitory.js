@@ -1,19 +1,13 @@
-const prisma = require('../libs/prisma');
+const users = [];
 
 async function findByEmail(email) {
-    return prisma.user.findUnique({
-        where: { email }
-    });
+    return users.find(u => u.email === email);
 }
 
-async function createUser(email, password, role = 'user') {
-    return prisma.user.create({
-        data: {
-            email,
-            password,
-            role
-        }
-    });
+async function createUser(email, password) {
+    const user = { id: users.length+1, email, password, role: 'user' };
+    users.push(user);
+    return user;
 }
 
 module.exports = {
